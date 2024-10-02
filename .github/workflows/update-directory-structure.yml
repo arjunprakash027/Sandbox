@@ -12,7 +12,7 @@ jobs:
 
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             
             - name: Set up Python
               uses: actions/setup-python@v4
@@ -27,13 +27,12 @@ jobs:
               env:
                  GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
               run: |
-                git config --global user.name "github-actions[bot]"
-                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                git config user.name "GitHub Actions"
+                git config user.email "actions@github.com"
 
                 git add README.md
 
                 git commit -m "updated directory structure at $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]"
                 
-                git remote set-url origin https://x-access-token:${{ secrets.ACTIONS_TOKEN }}@github.com/${{ github.repository }}.git
                 git push origin HEAD:main
                   
