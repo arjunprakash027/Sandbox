@@ -2,13 +2,23 @@ import os
 from pathlib import Path
 from typing import List
 
-def generate_markdown(directory:Path,ignore_files:List[str],level=0):
+def ignore_ruleset(item:Path,ignore_files:List[str]) -> bool:
+    
+    if item.name in ignore_files:
+        return True
+    
+    if item.name.startswith('.') or item.name.startswith('__'):
+        return True
+    
+    return False
+
+def generate_markdown(directory:Path,ignore_files:List[str],level=0) -> List:
     
     markdown_lines = []
 
     for item in sorted(directory.iterdir()):
         
-        if item.name in ignore_files:
+        if ignore_ruleset(item=item,ignore_files=ignore_files):
             continue
         
         indent = "  " * level
@@ -25,7 +35,7 @@ def traverser():
 
     current_file = Path(__file__).resolve()
     root_dir = current_file.parent
-    ignore_files = ['.git','__pycache__','volume']
+    ignore_files = ['volume']
     markdown_content = generate_markdown(directory=root_dir,ignore_files=ignore_files)
 
     print(markdown_content)
