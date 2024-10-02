@@ -1,0 +1,35 @@
+name: update directory structure in readme
+
+on:
+    push:
+        branches:
+            - main
+
+
+jobs:
+    generate-markdown:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.10'
+            
+            - name: Run script
+              run: |
+                python readme_generator.py
+            
+            - name: Commit and push changes
+              run: |
+                git config --global user.name "github-actions[bot]"
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+                git add README.md
+
+                git commit -m "updated directory structure at $(date -u +'%Y-%m-%d %H:%M:%S')"
+                
+                git push
