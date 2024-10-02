@@ -34,5 +34,7 @@ jobs:
 
                 git commit -m "updated directory structure at $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]"
                 
-                git push origin HEAD:main
+                echo "GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}"
+                echo "GITHUB_REPOSITORY: ${{ github.repository }}"
+                git push https://x-access-token:${{ secrets.ACTIONS_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
                   
