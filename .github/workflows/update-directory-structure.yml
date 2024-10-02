@@ -20,7 +20,7 @@ jobs:
 
       - name: Run the Python script
         run: |
-          python path/to/your_script.py  # Adjust to the correct path
+          python readme_generator.py
 
       - name: Commit and push changes
         env:
