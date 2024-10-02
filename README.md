@@ -54,6 +54,8 @@ Sandbox is collection of completely random codes that almost all the time does n
        - metaclasses.py
        - user.py
      - test.db
+   - **web_scrapping**
+     - scrap_oyoos.py
    - **websocts**
      - client_test.py
      - server_test.py
