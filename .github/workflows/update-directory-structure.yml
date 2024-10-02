@@ -34,4 +34,4 @@ jobs:
           git commit -m "Updated directory structure at $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]" || echo "No changes to commit"
           
           # Push the changes using the built-in GITHUB_TOKEN
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          git push 
