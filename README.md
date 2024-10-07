@@ -20,6 +20,13 @@ Sandbox is collection of completely random codes that almost all the time does n
      - clustering.ipynb
      - first_attempt.ipynb
  - LICENSE
+ - **Math and ML**
+   - **logistic_regression_ground_up**
+     - array_utilities.cpp
+     - array_utilities.h
+     - main
+     - main.cpp
+     - makefile
  - README.md
  - **fastapi_randoms**
    - **user_authentication**
