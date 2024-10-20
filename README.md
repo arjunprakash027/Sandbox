@@ -22,11 +22,11 @@ Sandbox is collection of completely random codes that almost all the time does n
  - LICENSE
  - **Math and ML**
    - **logistic_regression_ground_up**
+     - **archive**
+       - main.cpp
+       - makefile
      - array_utilities.cpp
      - array_utilities.hpp
-     - example.cpython-310-x86_64-linux-gnu.so
-     - main
-     - main.cpp
      - makefile
      - py_bind.cpp
      - testing.py
