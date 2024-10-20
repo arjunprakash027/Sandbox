@@ -1,3 +1,3 @@
-import example as ex
+import LinearModels as lm
 
-print(ex.sumcpp([2,3,4,6,7,8,9]))
+print(lm.logreg_fit([[2,3,4,6],[2,3,4,5]],[2,3,4,5]))

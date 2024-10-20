@@ -5,10 +5,10 @@ PYBIND_FLAGS = `python3 -m pybind11 --includes`
 PYTHON_CONFIG = `python3-config --extension-suffix`
 
 # Source files
-SRCS = array_utilities.cpp py_bind.cpp 
+SRCS = logisticRegression.cpp LinearModels.cpp 
 
 # Output file name
-TARGET = example$(PYTHON_CONFIG)
+TARGET = LinearModels$(PYTHON_CONFIG)
 
 # Rule to create the shared object
 $(TARGET): $(SRCS)
