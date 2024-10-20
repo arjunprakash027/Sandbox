@@ -1,18 +1,19 @@
+# Compiler and flags
 CXX = g++
+CXXFLAGS = -O3 -Wall -shared -std=c++11 -fPIC
+PYBIND_FLAGS = `python3 -m pybind11 --includes`
+PYTHON_CONFIG = `python3-config --extension-suffix`
 
-CXXFLAGS = -Wall -Wextra -std=c++11
+# Source files
+SRCS = array_utilities.cpp py_bind.cpp 
 
-SRCS = array_utilities.cpp main.cpp
+# Output file name
+TARGET = example$(PYTHON_CONFIG)
 
-OBJS = $(SRCS:.cpp=.o)
+# Rule to create the shared object
+$(TARGET): $(SRCS)
+	$(CXX) $(CXXFLAGS) $(PYBIND_FLAGS) $(SRCS) -o $(TARGET)
 
-TARGET = main
-
-$(TARGET) : $(OBJS)
-	$(CXX) $(OBJS) -o $(TARGET)
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
+# Clean rule to remove generated files
 clean:
-	rm -f $(OBJS)
+	rm -f $(TARGET)
