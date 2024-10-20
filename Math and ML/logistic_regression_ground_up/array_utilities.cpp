@@ -1,5 +1,5 @@
 #include <iostream>
-#include "array_utilities.h"
+#include "array_utilities.hpp"
 #include <vector>
 
 int array_utilities::sum(const std::vector<int>& vec){
