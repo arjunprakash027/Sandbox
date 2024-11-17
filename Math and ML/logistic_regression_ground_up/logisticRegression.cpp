@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <cmath>
 
-int checks(const std::vector<std::vector<double> >& X_Train, const std::vector<int>& Y_Train) {
+int checks(const std::vector<std::vector<double> >& X_Train, const std::vector<double>& Y_Train) {
 
     std::size_t YSize = Y_Train.size();
     std::size_t XDim = X_Train.size();
@@ -32,8 +32,8 @@ std::vector<double> calculate_linear_output (const std::vector<std::vector<doubl
     // Declaring the output variable where the output gets saved to
     std::vector<double> Z(RecordSize, 0.0);
 
-    for (std::double_t records = 0; records < RecordSize; ++records) {
-        for (std::double_t fields = 0; fields < FieldSize; ++fields) {
+    for (std::size_t records = 0; records < RecordSize; ++records) {
+        for (std::size_t fields = 0; fields < FieldSize; ++fields) {
             Z[records] += X_Train[fields][records] * W[fields];
         }
 
@@ -42,8 +42,30 @@ std::vector<double> calculate_linear_output (const std::vector<std::vector<doubl
     return Z;
 }
 
+int sigmoid_function (std::vector<double>& Z) {
 
-int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, const std::vector<int>& Y_Train) {
+    for (std::size_t outs = 0; outs < Z.size(); ++outs) {
+        Z[outs] = 1 / (1 + std::exp(-(Z[outs])));
+    }
+
+    return 0;
+}
+
+std::vector<double> log_loss (const std::vector<double> Z, const std::vector<double> Actual) {
+    std::size_t num_elements = Z.size();
+    std::vector<double> loss(num_elements, 0.0);
+
+    for (std::size_t outs = 0; outs < num_elements; ++outs) {
+
+        double actual_outcome = Actual[outs];
+        double predicted_prob = Z[outs];
+        loss[outs] = - ((actual_outcome * std::log(predicted_prob)) + ((1.0 - actual_outcome) * std::log(1.0 - predicted_prob)));
+    }
+
+    return loss;
+}
+
+int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, const std::vector<double>& Y_Train) {
 
     std::size_t YSize = Y_Train.size();
     std::size_t XDim = X_Train.size();
@@ -55,15 +77,24 @@ int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, co
     // Print number of elements in Y_Train
     std::cout << "Y_Train size: " << YSize << std::endl;
 
-    
+
     // Initializing the weights for linear function
     std::vector<double> w(XDim, 0.5);
 
     // Calculate the linear estimator value (z = summation(x*w))
     std::vector<double> Z(YSize, 0.0);
     Z = calculate_linear_output(X_Train,w);
+    sigmoid_function(Z);
 
     for (double out:Z) {
+        std::cout << out << " ";
+    }
+    std::cout << std::endl;
+
+    // Calculate the log loss (Binary cross entropy)
+    std::vector<double> error(YSize, 0.0);
+    error = log_loss(Z,Y_Train);
+    for (double out:error) {
         std::cout << out << " ";
     }
     std::cout << std::endl;
