@@ -51,21 +51,43 @@ int sigmoid_function (std::vector<double>& Z) {
     return 0;
 }
 
-std::vector<double> log_loss (const std::vector<double> Z, const std::vector<double> Actual) {
+double log_loss (const std::vector<double>& Z, const std::vector<double>& Actual) {
     std::size_t num_elements = Z.size();
-    std::vector<double> loss(num_elements, 0.0);
+    double loss = 0.0;
 
     for (std::size_t outs = 0; outs < num_elements; ++outs) {
 
         double actual_outcome = Actual[outs];
         double predicted_prob = Z[outs];
-        loss[outs] = - ((actual_outcome * std::log(predicted_prob)) + ((1.0 - actual_outcome) * std::log(1.0 - predicted_prob)));
+        loss += - ((actual_outcome * std::log(predicted_prob)) + ((1.0 - actual_outcome) * std::log(1.0 - predicted_prob)));
     }
 
-    return loss;
+    return loss / num_elements;
 }
 
-int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, const std::vector<double>& Y_Train) {
+std::vector<double> calculate_gradient (const std::size_t& Xdim, const std::size_t& YSize, const std::vector<double> Z, const std::vector<std::vector<double> >& X, const std::vector<double>& Y) {
+
+    std::vector<double> gradients(Xdim, 0.0);
+
+    for (std::size_t records = 0; records < YSize; ++records) {
+        for (std::size_t fields = 0; fields < Xdim; ++fields) {
+            gradients[fields] += ((Z[records] - Y[records]) * X[fields][records]) / YSize;
+        }
+    }
+
+    return gradients;
+}
+
+int update_weights (double& alpha,std::vector<double>& W, const std::vector<double>& gradient) {
+
+    for (std::size_t weight = 0; weight < W.size(); ++weight) {
+        W[weight] -= alpha * gradient[weight];
+    }
+
+    return 0;
+}
+
+int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, const std::vector<double>& Y_Train, double learning_rate, std::size_t epochs) {
 
     std::size_t YSize = Y_Train.size();
     std::size_t XDim = X_Train.size();
@@ -81,23 +103,35 @@ int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, co
     // Initializing the weights for linear function
     std::vector<double> w(XDim, 0.5);
 
-    // Calculate the linear estimator value (z = summation(x*w))
-    std::vector<double> Z(YSize, 0.0);
-    Z = calculate_linear_output(X_Train,w);
-    sigmoid_function(Z);
 
-    for (double out:Z) {
-        std::cout << out << " ";
-    }
-    std::cout << std::endl;
+    for (std::size_t iter = 0; iter < epochs; ++iter) {
+        // Calculate the linear estimator value (z = summation(x*w))
+        std::vector<double> Z(YSize, 0.0);
+        Z = calculate_linear_output(X_Train,w);
+        sigmoid_function(Z);
 
-    // Calculate the log loss (Binary cross entropy)
-    std::vector<double> error(YSize, 0.0);
-    error = log_loss(Z,Y_Train);
-    for (double out:error) {
-        std::cout << out << " ";
+        // Calculate the gradient of loss function
+        std::vector<double> gradient(XDim, 0.0);
+        gradient = calculate_gradient(XDim,YSize,Z,X_Train,Y_Train);
+
+        // Update weights
+        update_weights(learning_rate, w, gradient);
+
+        // Calculate the log loss (Binary cross entropy)
+        double error = 0.0;
+        error = log_loss(Z,Y_Train);
+
+        std::cout << "Epoch: " << iter + 1 << ", Error: " << error << ", Weights: ";
+        for (const auto& weight : w) {
+            std::cout << weight << " ";
+        }
+        std::cout << ", Gradient: ";
+        for (const auto& grad : gradient) {
+            std::cout << grad << " ";
+        }
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
+    
 
     return 0;
 }
