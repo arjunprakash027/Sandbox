@@ -23,7 +23,8 @@ Sandbox is collection of completely random codes that almost all the time does n
  - **Math and ML**
    - **logistic_regression_ground_up**
      - LinearModels.cpp
-     - LinearModels.cpython-310-x86_64-linux-gnu.so
+     - LinearModels.o
+     - LinearModels.so
      - **archive**
        - array_utilities.cpp
        - array_utilities.hpp
@@ -32,7 +33,9 @@ Sandbox is collection of completely random codes that almost all the time does n
        - py_bind.cpp
      - logisticRegression.cpp
      - logisticRegression.hpp
+     - logisticRegression.o
      - makefile
+     - makefile_mac
      - testing.py
  - README.md
  - **fastapi_randoms**
