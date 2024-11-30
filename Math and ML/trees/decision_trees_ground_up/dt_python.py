@@ -3,6 +3,11 @@ Author : Arjun Prakash
 Description : A simple Binary decision tree implementation in python
 Date Written: 30/11/24
 Last Edited: 30/11/24
+
+To do:
+
+- Add split on each nodes to increase the depth of the tree
+- Save the parameters of the tree such that it could be used for inference instead of just training
 '''
 
 import pandas as pd
