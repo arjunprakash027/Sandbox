@@ -110,6 +110,7 @@ int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, co
         Z = calculate_linear_output(X_Train,w);
         sigmoid_function(Z);
 
+<<<<<<< Updated upstream
         // Calculate the gradient of loss function
         std::vector<double> gradient(XDim, 0.0);
         gradient = calculate_gradient(XDim,YSize,Z,X_Train,Y_Train);
@@ -130,6 +131,13 @@ int LogisticRegression::fit(const std::vector<std::vector<double> >& X_Train, co
             std::cout << grad << " ";
         }
         std::cout << std::endl;
+=======
+    // Calculate the log loss (Binary cross entropy)ā
+    std::vector<double> error(YSize, 0.0);
+    error = log_loss(Z,Y_Train);
+    for (double out:error) {
+        std::cout << out << " ";
+>>>>>>> Stashed changes
     }
     
 
