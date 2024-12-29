@@ -34,7 +34,6 @@ Sandbox is collection of completely random codes that almost all the time does n
      - logisticRegression.cpp
      - logisticRegression.hpp
      - logisticRegression.o
-     - makefile
      - makefile_mac
      - testing.py
    - **statistics**
