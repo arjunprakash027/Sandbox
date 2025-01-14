@@ -13,14 +13,18 @@ Sandbox is collection of completely random codes that almost all the time does n
    - pattern_questions.ipynb
    - queue_try.py
    - singlyLL.py
- - **Image_Compression**
-   - **data**
-     - d1.jpg
-   - **notebooks**
-     - clustering.ipynb
-     - first_attempt.ipynb
  - LICENSE
  - **Math and ML**
+   - **Arbitrary Notebooks  Python Snippets**
+     - Principles of Data Science- Assignment.ipynb
+     - WhatsApp Image 2024-08-24 at 22.01.56_4443eaec.jpg
+     - markov_chains_factory.ipynb
+   - **Image_Compression**
+     - **data**
+       - d1.jpg
+     - **notebooks**
+       - clustering.ipynb
+       - first_attempt.ipynb
    - **logistic_regression_ground_up**
      - LinearModels.cpp
      - LinearModels.o
@@ -58,6 +62,8 @@ Sandbox is collection of completely random codes that almost all the time does n
    - **class_and_function**
      - decorators.py
      - wraps.py
+   - **databases**
+     - upload_csv_to_pg.py
    - **generators**
      - python_generators_indepth.py
    - **oops**
