@@ -88,6 +88,14 @@ def scrape_individual_companies() -> None:
             steps=steps
         )
 
+def get_first_item(
+        data_list: list,
+        default: str = ""
+) -> str:
+    
+    return data_list[0] if data_list else default
+
+
 def combine_data() -> None:
     directory = "./data/json/company_names_and_urls"
 
@@ -115,36 +123,17 @@ def combine_data() -> None:
         with open(file=json_path,mode='r',encoding='utf-8') as f:
             print(individual_company)
             data_file = json.load(f)
-            principal = data_file['principal name']
-            industry = data_file['industry']
-            address = data_file['address']
-            address_url = data_file['address_url']
-            company_website = data_file['company_website']
+            principal = get_first_item(data_file.get('principal name',[]))
+            industry = ",".join(data_file.get('industry', ["",""])[:2])
+            address = get_first_item(data_file.get('address',[]))
+            address_url = get_first_item(data_file.get('address_url',[]))
+            company_website = get_first_item(data_file.get('company_website',[]))
 
-            if principal:
-                all_principles.append(principal[0])
-            else:
-                all_principles.append("")
-
-            if industry:
-                all_industries.append(f"{industry[0]},{industry[1]}")
-            else:
-                all_industries.append("")
-            
-            if address:
-                all_addresses.append(address[0])
-            else:
-                all_addresses.append("")
-
-            if address_url:
-                all_addresses_url.append(address_url[0])
-            else:
-                all_addresses_url.append("")
-            
-            if company_website:
-                all_company_website.append(company_website[0])
-            else:
-                all_company_website.append("")
+            all_principles.append(principal)
+            all_addresses.append(address)
+            all_addresses_url.append(address_url)
+            all_company_website.append(company_website)
+            all_industries.append(industry)
 
     df = pd.DataFrame(
         {
