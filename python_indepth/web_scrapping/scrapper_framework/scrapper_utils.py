@@ -132,11 +132,16 @@ def scrapper_pipeline(
             print(f"Navigated to: {driver.current_url}")
         
         elif method == 'click':
-            click_on_xpath(
-                driver=driver,
-                by = By,
-                xpath = element
-            )
+
+            try:
+                click_on_xpath(
+                    driver=driver,
+                    by = By,
+                    xpath = element,
+                    timeout=3
+                )
+            except Exception as e:
+                print(f"Tried clicking on element {element}, but met with an error : {e}")
         
         elif method == 'save':
             page_source = driver.page_source
@@ -172,6 +177,7 @@ def scrapper_pipeline(
 
 
         elif method == 'sleep':
+            print("Sleeping")
             time.sleep(element)
         
         else:
