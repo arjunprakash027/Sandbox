@@ -1,4 +1,4 @@
-import threading
+import ray
 import random
 from typing import List, Tuple
 import time
@@ -13,17 +13,19 @@ def create_matrix(n: int) -> Tuple:
 
     return (matrix1, matrix2, result_matrix)
 
-def matrix_multiply(A: List, B: List, result: List, row: int) -> None:
+@ray.remote
+def matrix_multiply(A: List, B: List, row: int) -> List:
     
-    n = len(A[0])
-    m = len(A)
+    n = len(A)
+    result_row = [0] * n
 
     #print(f"Thread {row} starting...")  # Shows parallel execution
 
     for j in range(n):
-        for k in range(m):
-            result[row][j] += A[row][k] * B[k][j]
+        for k in range(n):
+            result_row[j] += A[row][k] * B[k][j]
     
+    return result_row
     #print(f"Thread {row} finished! Result[{row}][0] = {result[row][0]}")
 
 
@@ -35,14 +37,9 @@ if __name__ == "__main__":
     threads = []
     start = time.time()
 
-    for i in range(n):
+    futures = [matrix_multiply.remote(A,B,i) for i in range(n)]
 
-        t = threading.Thread(target=matrix_multiply, args=(A, B, result, i))
-        threads.append(t)
-        t.start()
-    
-    for t in threads:
-        t.join()
+    result = ray.get(futures)
     
     elapsed = time.time() - start
     print(f"\nAFTER threading - result[0][0]: {result[0][0]}")
