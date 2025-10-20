@@ -98,6 +98,13 @@ Sandbox is collection of completely random codes that almost all the time does n
      - client_test.py
      - server_test.py
  - readme_generator.py
+ - **scalable_computing**
+   - **distributed_python**
+     - README.md
+     - main.py
+     - matmul_ray.py
+     - pyproject.toml
+     - testing_ray.py
  - **telegram_bot_test**
    - interact_with_cmdline.py
    - naribot.py
